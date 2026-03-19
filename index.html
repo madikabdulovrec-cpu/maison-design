@@ -710,6 +710,221 @@
             box-shadow: var(--shadow-gold);
         }
 
+        /* ===== PRODUCT CARD EXPANDABLE ===== */
+        .product-card { cursor: pointer; }
+        .product-card-body p {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            margin-bottom: 0;
+            transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, margin-bottom 0.4s ease;
+        }
+        .product-card.expanded .product-card-body p {
+            max-height: 200px;
+            opacity: 1;
+            margin-bottom: 1.2rem;
+        }
+        .product-card-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            border-top: 1px solid var(--gray-light);
+            background: linear-gradient(180deg, transparent, rgba(201,169,110,0.04));
+            transition: var(--transition);
+        }
+        .product-card-toggle i {
+            transition: transform 0.4s ease;
+            font-size: 0.6rem;
+        }
+        .product-card.expanded .product-card-toggle i {
+            transform: rotate(180deg);
+        }
+        .product-card-toggle:hover {
+            color: var(--gold);
+            background: linear-gradient(180deg, transparent, rgba(201,169,110,0.1));
+        }
+        .product-card .product-btn {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            border: none;
+            transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease, margin 0.4s ease;
+        }
+        .product-card.expanded .product-btn {
+            opacity: 1;
+            max-height: 60px;
+            padding: 0.65rem 1.5rem;
+            margin-top: 0;
+            border: 1.5px solid var(--gold);
+        }
+
+        /* ===== PRODUCT DETAIL MODAL ===== */
+        .product-modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 15, 26, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+        .product-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .product-modal {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            background: var(--white);
+            border-radius: 20px;
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+        }
+        .product-modal.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .product-modal-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 400px;
+        }
+        .product-modal-image {
+            position: relative;
+            overflow: hidden;
+        }
+        .product-modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .product-modal-image .product-card-badge {
+            top: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.7rem;
+            padding: 0.5rem 1.2rem;
+        }
+        .product-modal-info {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+        .product-modal-info h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            color: var(--black);
+        }
+        .product-modal-info .product-type {
+            font-size: 0.8rem;
+            color: var(--terracotta);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .product-modal-info .product-type i { font-size: 0.6rem; }
+        .product-modal-desc {
+            font-size: 0.95rem;
+            color: var(--gray-dark);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        .product-modal-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+        .product-modal-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+        }
+        .product-modal-feature i {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gold-glow);
+            border-radius: 8px;
+            color: var(--gold-dark);
+            font-size: 0.65rem;
+        }
+        .product-modal-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        .product-modal-actions .product-btn {
+            opacity: 1;
+            max-height: none;
+            border: 1.5px solid var(--gold);
+            padding: 0.75rem 2rem;
+            font-size: 0.75rem;
+        }
+        .product-modal-actions .product-btn.primary {
+            background: linear-gradient(135deg, var(--gold), var(--terracotta-muted));
+            color: var(--white);
+            border: none;
+        }
+        .product-modal-close {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            width: 40px; height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            color: var(--black);
+            z-index: 2;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .product-modal-close:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+        @media (max-width: 768px) {
+            .product-modal-content { grid-template-columns: 1fr; }
+            .product-modal-image { max-height: 250px; }
+            .product-modal-info { padding: 1.5rem; }
+            .product-modal-info h2 { font-size: 1.5rem; }
+            .product-modal-features { grid-template-columns: 1fr; }
+        }
+
         /* ===== SHOWCASE ===== */
         .showcase {
             position: relative;
@@ -1314,7 +1529,7 @@
         </div>
     </section>
 
-    <section class="brands" id="brands">
+    <section class="brands" id="brands" style="padding-top: 3rem;">
         <div class="brands-header">
             <div class="section-label reveal">Наши бренды</div>
             <h2 class="section-title reveal">Коллекции от мировых<br>производителей</h2>
@@ -1968,9 +2183,38 @@
         </div>
     </div>
 
+    <!-- Product Detail Modal -->
+    <div class="product-modal-overlay" id="productModalOverlay" onclick="closeProductModal()"></div>
+    <div class="product-modal" id="productModal">
+        <button class="product-modal-close" onclick="closeProductModal()"><i class="fas fa-times"></i></button>
+        <div class="product-modal-content">
+            <div class="product-modal-image">
+                <img id="productModalImg" src="" alt="">
+                <span class="product-card-badge" id="productModalBadge"></span>
+            </div>
+            <div class="product-modal-info">
+                <h2 id="productModalTitle"></h2>
+                <div class="product-type" id="productModalType"></div>
+                <p class="product-modal-desc" id="productModalDesc"></p>
+                <div class="product-modal-features" id="productModalFeatures"></div>
+                <div class="product-modal-actions">
+                    <button class="product-btn primary" onclick="closeProductModal(); openModal(document.getElementById('productModalTitle').textContent)"><i class="fas fa-tag"></i> Узнать цену</button>
+                    <button class="product-btn" onclick="closeProductModal()"><i class="fas fa-arrow-left"></i> Назад</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
 
     <script>
+        // Move catalog to 3rd position (after marquee strip)
+        const catalogSection = document.querySelector('.catalog');
+        const marqueeStrip = document.querySelector('.marquee-strip');
+        if (catalogSection && marqueeStrip) {
+            marqueeStrip.after(catalogSection);
+        }
+
         const header = document.getElementById('header');
         const backToTop = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
@@ -1985,6 +2229,107 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+        // Add toggle buttons to all product cards
+        document.querySelectorAll('.product-card').forEach(card => {
+            const toggle = document.createElement('div');
+            toggle.className = 'product-card-toggle';
+            toggle.innerHTML = '<span>Подробнее</span> <i class="fas fa-chevron-down"></i>';
+            card.appendChild(toggle);
+        });
+
+        // Product card click - expand/collapse
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't toggle if clicking the price button
+                if (e.target.closest('.product-btn')) return;
+
+                const isExpanded = this.classList.contains('expanded');
+                // Collapse all others
+                document.querySelectorAll('.product-card.expanded').forEach(c => {
+                    if (c !== this) {
+                        c.classList.remove('expanded');
+                        c.querySelector('.product-card-toggle span').textContent = 'Подробнее';
+                    }
+                });
+                // Toggle this card
+                this.classList.toggle('expanded');
+                const toggleText = this.querySelector('.product-card-toggle span');
+                toggleText.textContent = this.classList.contains('expanded') ? 'Свернуть' : 'Подробнее';
+            });
+
+            // Double-click opens full modal
+            card.addEventListener('dblclick', function(e) {
+                if (e.target.closest('.product-btn')) return;
+                openProductDetail(this);
+            });
+        });
+
+        // Product detail modal
+        function openProductDetail(card) {
+            const img = card.querySelector('.product-card-image img');
+            const badge = card.querySelector('.product-card-badge');
+            const title = card.querySelector('.product-card-body h3');
+            const type = card.querySelector('.product-card-body .product-type');
+            const desc = card.querySelector('.product-card-body p');
+            const category = card.dataset.category;
+
+            document.getElementById('productModalImg').src = img.src;
+            document.getElementById('productModalImg').alt = img.alt;
+            document.getElementById('productModalBadge').innerHTML = badge.innerHTML;
+            document.getElementById('productModalTitle').textContent = title.textContent;
+            document.getElementById('productModalType').innerHTML = type.innerHTML;
+            document.getElementById('productModalDesc').textContent = desc.textContent;
+
+            // Generate features based on category
+            const features = {
+                sofa: [
+                    {icon: 'fa-couch', text: 'Премиальная обивка'},
+                    {icon: 'fa-expand-arrows-alt', text: 'Модульная система'},
+                    {icon: 'fa-shield-alt', text: 'Гарантия 5 лет'},
+                    {icon: 'fa-truck', text: 'Бесплатная доставка'}
+                ],
+                dining: [
+                    {icon: 'fa-utensils', text: 'Полный комплект'},
+                    {icon: 'fa-gem', text: 'Натуральные материалы'},
+                    {icon: 'fa-shield-alt', text: 'Гарантия 5 лет'},
+                    {icon: 'fa-tools', text: 'Сборка включена'}
+                ],
+                bedroom: [
+                    {icon: 'fa-bed', text: 'Кровать + тумбы'},
+                    {icon: 'fa-leaf', text: 'Эко-материалы'},
+                    {icon: 'fa-shield-alt', text: 'Гарантия 5 лет'},
+                    {icon: 'fa-ruler-combined', text: 'Индивидуальные размеры'}
+                ],
+                tv: [
+                    {icon: 'fa-tv', text: 'Система крепления'},
+                    {icon: 'fa-box', text: 'Скрытые полки'},
+                    {icon: 'fa-shield-alt', text: 'Гарантия 5 лет'},
+                    {icon: 'fa-paint-roller', text: 'Выбор отделки'}
+                ],
+                decor: [
+                    {icon: 'fa-palette', text: 'Дизайнерский декор'},
+                    {icon: 'fa-globe-europe', text: 'Итальянский стиль'},
+                    {icon: 'fa-box-open', text: 'Безопасная упаковка'},
+                    {icon: 'fa-redo', text: 'Обмен 14 дней'}
+                ]
+            };
+
+            const feats = features[category] || features.sofa;
+            document.getElementById('productModalFeatures').innerHTML = feats.map(f =>
+                `<div class="product-modal-feature"><i class="fas ${f.icon}"></i><span>${f.text}</span></div>`
+            ).join('');
+
+            document.getElementById('productModalOverlay').classList.add('active');
+            document.getElementById('productModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModalOverlay').classList.remove('active');
+            document.getElementById('productModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
         document.querySelectorAll('.catalog-filter').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.catalog-filter').forEach(b => b.classList.remove('active'));
@@ -1994,6 +2339,7 @@
                     const show = filter === 'all' || card.dataset.category === filter;
                     card.setAttribute('data-hidden', !show);
                     card.style.display = show ? '' : 'none';
+                    card.classList.remove('expanded');
                 });
             });
         });
@@ -2017,7 +2363,16 @@
                 e.preventDefault();
                 const t = document.querySelector(this.getAttribute('href'));
                 if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.getElementById('mobileNav').classList.remove('active');
             });
+        });
+
+        // Close product modal on Escape
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                closeProductModal();
+                closeModal();
+            }
         });
     </script>
 </body>
