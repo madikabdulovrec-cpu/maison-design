@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAISON DESIGN — Премиальная мебель</title>
+    <meta name="description" content="MAISON DESIGN — салон премиальной мебели. Эксклюзивные коллекции YOL Living, Bomonti, декор Natuzzi Italia.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #1a1a2e;
+            --black-deep: #0f0f1a;
+            --gold: #c9a96e;
+            --gold-light: #e0c992;
+            --gold-glow: rgba(201, 169, 110, 0.15);
+            --gold-dark: #a8894f;
+            --white: #fefcf9;
+            --cream: #f8f1e8;
+            --cream-pink: #faf0ed;
+            --cream-warm: #f5ece3;
+            --blush: #e8c4b8;
+            --blush-light: #f5ddd5;
+            --sage: #c5cfc0;
+            --sage-light: #dfe8db;
+            --lavender: #d5cfe8;
+            --lavender-light: #eae6f5;
+            --sand: #e6dace;
+            --terracotta: #c4856c;
+            --terracotta-muted: #d4a08a;
+            --gray: #7a7a8a;
+            --gray-light: #e8e4df;
+            --gray-dark: #3a3a4a;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-elegant: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Montserrat', 'Segoe UI', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shadow-soft: 0 8px 40px rgba(26, 26, 46, 0.08);
+            --shadow-hover: 0 16px 60px rgba(26, 26, 46, 0.14);
+            --shadow-gold: 0 8px 30px rgba(201, 169, 110, 0.2);
+        }
+
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--black);
+            background: var(--white);
+            line-height: 1.7;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+        .section-label {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .section-label::before, .section-label::after {
+            content: '';
+            width: 40px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--terracotta));
+        }
+        .section-label::after {
+            background: linear-gradient(90deg, var(--terracotta), transparent);
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--black);
+        }
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--gray);
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        /* ===== DECORATIVE ELEMENTS ===== */
+        .deco-diamond {
+            width: 8px; height: 8px;
+            background: var(--gold);
+            transform: rotate(45deg);
+            display: inline-block;
+        }
+        .deco-line {
+            width: 60px; height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--terracotta));
+            margin: 1.5rem auto;
+            border-radius: 2px;
+        }
+        .deco-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 1.5rem 0;
+        }
+        .deco-dots span {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.5;
+        }
+        .deco-dots span:nth-child(2) { opacity: 0.8; width: 6px; height: 6px; }
+        .deco-dots span:nth-child(3) { opacity: 1; width: 7px; height: 7px; }
+        .deco-dots span:nth-child(4) { opacity: 0.8; width: 6px; height: 6px; }
+        .deco-dots span:nth-child(5) { opacity: 0.5; }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+        .reveal-delay-3 { transition-delay: 0.45s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.3); }
+            50% { box-shadow: 0 0 0 12px rgba(201, 169, 110, 0); }
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.5rem 4%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+        .header.scrolled {
+            background: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 4%;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+        .header-logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--white);
+            letter-spacing: 0.15em;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .header-logo i {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+        .header-logo span { color: var(--gold); }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .header-nav a {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .header-nav a i { font-size: 0.65rem; color: var(--gold); opacity: 0; transition: var(--transition); }
+        .header-nav a:hover i { opacity: 1; }
+        .header-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: linear-gradient(90deg, var(--gold), var(--terracotta));
+            transition: width 0.3s ease;
+        }
+        .header-nav a:hover { color: var(--gold); }
+        .header-nav a:hover::after { width: 100%; }
+
+        .header-cta {
+            padding: 0.65rem 1.8rem;
+            background: linear-gradient(135deg, var(--gold), var(--terracotta-muted));
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: var(--transition);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .header-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .mobile-nav { display: none; }
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .mobile-toggle span {
+            width: 24px; height: 1.5px;
+            background: var(--white);
+            transition: var(--transition);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+        }
+        .hero-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.3) saturate(1.1);
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(15,15,26,0.4) 0%, rgba(15,15,26,0.2) 40%, rgba(15,15,26,0.7) 100%),
+                radial-gradient(ellipse at 20% 50%, rgba(201,169,110,0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 30%, rgba(196,133,108,0.08) 0%, transparent 50%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--white);
+            max-width: 850px;
+            padding: 0 2rem;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid rgba(201,169,110,0.3);
+            border-radius: 30px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            background: rgba(201,169,110,0.08);
+        }
+        .hero-badge i { color: var(--gold-light); font-size: 0.7rem; }
+        .hero-badge span {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            font-weight: 500;
+        }
+        .hero-content h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 6vw, 5.2rem);
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+        .hero-content h1 em {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--gold-light), var(--blush), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-content p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 1rem 2.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+        .hero-btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--terracotta-muted));
+            color: var(--white);
+        }
+        .hero-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(201,169,110,0.35);
+        }
+        .hero-btn-secondary {
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            backdrop-filter: blur(5px);
+        }
+        .hero-btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        .hero-scroll {
+            position: absolute;
+            bottom: 2.5rem; left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hero-scroll-icon {
+            width: 28px; height: 44px;
+            border: 2px solid rgba(255,255,255,0.25);
+            border-radius: 14px;
+            position: relative;
+        }
+        .hero-scroll-icon::after {
+            content: '';
+            position: absolute;
+            top: 8px; left: 50%;
+            transform: translateX(-50%);
+            width: 3px; height: 8px;
+            background: var(--gold);
+            border-radius: 2px;
+            animation: scrollDot 2s ease-in-out infinite;
+        }
+        @keyframes scrollDot {
+            0%, 100% { opacity: 1; top: 8px; }
+            50% { opacity: 0.3; top: 22px; }
+        }
+
+        /* ===== MARQUEE STRIP ===== */
+        .marquee-strip {
+            background: linear-gradient(135deg, var(--black-deep), var(--black));
+            padding: 1rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .marquee-track {
+            display: flex;
+            gap: 3rem;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            white-space: nowrap;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        .marquee-item i { color: var(--gold); font-size: 0.6rem; }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ===== ADVANTAGES ===== */
+        .advantages {
+            padding: 7rem 4%;
+            background: linear-gradient(180deg, var(--white) 0%, var(--cream-pink) 50%, var(--cream) 100%);
+            position: relative;
+        }
+        .advantages::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 200px;
+            background: radial-gradient(ellipse at 30% 0%, rgba(232,196,184,0.3) 0%, transparent 70%),
+                        radial-gradient(ellipse at 70% 0%, rgba(213,207,232,0.2) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .advantages-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        .advantage-card {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(201,169,110,0.12);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .advantage-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--terracotta-muted), var(--blush));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .advantage-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        .advantage-card:hover::before { opacity: 1; }
+        .advantage-icon {
+            width: 70px; height: 70px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            position: relative;
+        }
+        .advantage-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cream-pink), var(--lavender-light));
+            z-index: 0;
+        }
+        .advantage-icon i {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--gold), var(--terracotta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+        .advantage-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            color: var(--black);
+        }
+        .advantage-card p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* ===== BRANDS ===== */
+        .brands {
+            padding: 7rem 4%;
+            background: linear-gradient(180deg, var(--cream) 0%, var(--cream-warm) 50%, var(--cream-pink) 100%);
+            position: relative;
+        }
+        .brands-header { text-align: center; margin-bottom: 5rem; }
+        .brands-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .brand-card {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+        }
+        .brand-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        .brand-card:hover img { transform: scale(1.06); }
+        .brand-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(15,15,26,0.9) 0%, rgba(15,15,26,0.1) 55%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2.5rem;
+            transition: var(--transition);
+        }
+        .brand-card:hover .brand-card-overlay {
+            background: linear-gradient(0deg, rgba(15,15,26,0.95) 0%, rgba(15,15,26,0.2) 65%);
+        }
+        .brand-card-icon {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--terracotta-muted));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .brand-card-icon i { color: var(--white); font-size: 1rem; }
+        .brand-card-overlay h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        .brand-card-overlay p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+        .brand-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gold-light);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+        .brand-card-link:hover { gap: 1rem; }
+
+        /* ===== CATALOG ===== */
+        .catalog {
+            padding: 7rem 4%;
+            background: linear-gradient(180deg, var(--cream-pink) 0%, var(--white) 30%, var(--sage-light) 70%, var(--cream) 100%);
+            position: relative;
+        }
+        .catalog-header { text-align: center; margin-bottom: 3rem; }
+        .catalog-filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+        .catalog-filter {
+            padding: 0.6rem 1.6rem;
+            border: 1px solid var(--gray-light);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-dark);
+            transition: var(--transition);
+            background: rgba(255,255,255,0.6);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .catalog-filter i { font-size: 0.65rem; }
+        .catalog-filter:hover,
+        .catalog-filter.active {
+            border-color: var(--gold);
+            color: var(--white);
+            background: linear-gradient(135deg, var(--gold), var(--terracotta-muted));
+            box-shadow: var(--shadow-gold);
+        }
+        .catalog-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        .product-card {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.8);
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+        }
+        .product-card[data-hidden="true"] { display: none; }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .product-card-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+        .product-card-image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .product-card:hover .product-card-image img { transform: scale(1.06); }
+        .product-card-badge {
+            position: absolute;
+            top: 1rem; left: 1rem;
+            padding: 0.35rem 0.9rem;
+            background: linear-gradient(135deg, rgba(15,15,26,0.8), rgba(15,15,26,0.9));
+            backdrop-filter: blur(10px);
+            color: var(--white);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .product-card-badge i { color: var(--gold); font-size: 0.5rem; }
+        .product-card-body {
+            padding: 1.5rem;
+        }
+        .product-card-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        .product-card-body .product-type {
+            font-size: 0.75rem;
+            color: var(--terracotta);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .product-card-body .product-type i { font-size: 0.55rem; }
+        .product-card-body p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+        }
+        .product-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.5rem;
+            border: 1.5px solid var(--gold);
+            color: var(--gold-dark);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: var(--transition);
+            border-radius: 30px;
+        }
+        .product-btn:hover {
+            background: linear-gradient(135deg, var(--gold), var(--terracotta-muted));
+            color: var(--white);
+            border-color: transparent;
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* ===== SHOWCASE ===== */
+        .showcase {
+            position: relative;
+            height: 65vh;
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .showcase-bg {
+            position: absolute;
+            inset: 0;
+        }
+        .showcase-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.25) saturate(1.2);
+        }
+        .showcase-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(201,169,110,0.1) 0%, transparent 60%);
+        }
+        .showcase-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--white);
+            max-width: 700px;
+            padding: 0 2rem;
+        }
+        .showcase-content .section-label::before, .showcase-content .section-label::after {
+            background: linear-gradient(90deg, transparent, var(--gold-light));
+        }
+        .showcase-content .section-label::after {
+            background: linear-gradient(90deg, var(--gold-light), transparent);
+        }
+        .showcase-content .section-label { color: var(--gold-light); }
+        .showcase-content h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+        .showcase-content p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2.5rem;
+        }
+        .showcase-features {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+        .showcase-feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .showcase-feature i {
+            font-size: 1.3rem;
+            color: var(--gold);
+        }
+        .showcase-feature span {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 7rem 4%;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--lavender-light) 40%, var(--cream-pink) 100%);
+            position: relative;
+        }
+        .about-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            aspect-ratio: 4/5;
+            box-shadow: var(--shadow-hover);
+        }
+        .about-image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .about-image-badge {
+            position: absolute;
+            bottom: 2rem; right: -1rem;
+            background: linear-gradient(135deg, var(--gold), var(--terracotta-muted));
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow-gold);
+        }
+        .about-image-badge .number {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+        .about-image-badge .label {
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+        .about-text { padding: 1rem 0; }
+        .about-text p {
+            font-size: 0.95rem;
+            color: var(--gray-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.9;
+        }
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .about-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(201,169,110,0.15);
+        }
+        .about-stat i {
+            font-size: 1.2rem;
+            color: var(--terracotta);
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+        .about-stat-number {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, var(--gold), var(--terracotta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .about-stat-text {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            padding: 7rem 4%;
+            background: linear-gradient(135deg, var(--black-deep), var(--black), #1e1e3a);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: -200px; right: -200px;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+        }
+        .contact::after {
+            content: '';
+            position: absolute;
+            bottom: -150px; left: -150px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(196,133,108,0.06) 0%, transparent 70%);
+        }
+        .contact-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .contact-info .section-label { color: var(--gold-light); justify-content: flex-start; }
+        .contact-info .section-label::before { display: none; }
+        .contact-info .section-title { color: var(--white); }
+        .contact-info > p {
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .contact-details {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .contact-details li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.75);
+        }
+        .contact-details li .icon-wrap {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: rgba(201,169,110,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .contact-details li .icon-wrap i {
+            color: var(--gold);
+            font-size: 0.85rem;
+        }
+        .contact-details li strong {
+            display: block;
+            font-weight: 500;
+            color: var(--gold-light);
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 0.15rem;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            background: rgba(255,255,255,0.04);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
+        }
+        .contact-form h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .contact-form h3 i { color: var(--gold); font-size: 1rem; }
+        .form-group { position: relative; }
+        .form-group i {
+            position: absolute;
+            left: 0; top: 1rem;
+            color: rgba(255,255,255,0.2);
+            font-size: 0.8rem;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 0 1rem 1.8rem;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            background: transparent;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-bottom-color: var(--gold);
+        }
+        .form-group input:focus + i,
+        .form-group textarea:focus + i { color: var(--gold); }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .submit-btn {
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--terracotta-muted));
+            color: var(--white);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            transition: var(--transition);
+            align-self: flex-start;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 3rem 4%;
+            background: #08081a;
+            color: rgba(255,255,255,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--white);
+            letter-spacing: 0.15em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .footer-logo i { color: var(--gold); font-size: 0.7rem; }
+        .footer-logo span { color: var(--gold); }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        .footer-social a {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.4);
+            transition: var(--transition);
+            font-size: 0.8rem;
+        }
+        .footer-social a:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(201,169,110,0.08);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15,15,26,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            z-index: 9999;
+            background: var(--white);
+            padding: 3.5rem;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+        }
+        .modal.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1.2rem;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            background: none; border: none;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .modal-close:hover { background: var(--cream); color: var(--black); }
+        .modal h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .modal h3 i { color: var(--gold); font-size: 1.1rem; }
+        .modal p { font-size: 0.85rem; color: var(--gray); margin-bottom: 2rem; }
+        .modal .form-group i { color: var(--gray-light); }
+        .modal .form-group input,
+        .modal .form-group textarea {
+            color: var(--black);
+            border-bottom-color: var(--gray-light);
+        }
+        .modal .form-group input::placeholder,
+        .modal .form-group textarea::placeholder { color: var(--gray); }
+        .modal .form-group input:focus,
+        .modal .form-group textarea:focus { border-bottom-color: var(--gold); }
+        .modal .submit-btn { width: 100%; justify-content: center; }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem; right: 2rem;
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--gold), var(--terracotta-muted));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            border-radius: 50%;
+            box-shadow: var(--shadow-gold);
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-4px); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .advantages-grid { grid-template-columns: repeat(2, 1fr); }
+            .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .header-nav, .header-cta { display: none; }
+            .mobile-toggle { display: flex; }
+            .mobile-nav {
+                display: block;
+                position: fixed;
+                inset: 0;
+                background: rgba(15,15,26,0.98);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+            }
+            .mobile-nav.active { opacity: 1; visibility: visible; }
+            .mobile-nav-inner {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+            }
+            .mobile-nav a {
+                color: var(--white);
+                font-size: 1.2rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                font-family: var(--font-display);
+            }
+            .mobile-nav-close {
+                position: absolute;
+                top: 1.5rem; right: 1.5rem;
+                color: var(--white);
+                font-size: 2rem;
+                background: none; border: none;
+                cursor: pointer;
+            }
+            .advantages-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .brands-grid { grid-template-columns: 1fr; }
+            .catalog-grid { grid-template-columns: 1fr; }
+            .about-container { grid-template-columns: 1fr; gap: 3rem; }
+            .contact-container { grid-template-columns: 1fr; gap: 3rem; }
+            .footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+            .showcase-features { gap: 1.5rem; }
+            .marquee-item { font-size: 0.65rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header" id="header">
+        <a href="#" class="header-logo"><i class="fas fa-gem"></i> MAISON <span>DESIGN</span></a>
+        <nav>
+            <ul class="header-nav">
+                <li><a href="#home"><i class="fas fa-chevron-right"></i> Главная</a></li>
+                <li><a href="#catalog"><i class="fas fa-chevron-right"></i> Каталог</a></li>
+                <li><a href="#brands"><i class="fas fa-chevron-right"></i> Бренды</a></li>
+                <li><a href="#about"><i class="fas fa-chevron-right"></i> О нас</a></li>
+                <li><a href="#contact"><i class="fas fa-chevron-right"></i> Контакты</a></li>
+            </ul>
+        </nav>
+        <button class="header-cta" onclick="openModal()"><i class="fas fa-paper-plane"></i> Оставить заявку</button>
+        <div class="mobile-toggle" onclick="toggleMobileNav()">
+            <span></span><span></span><span></span>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" onclick="toggleMobileNav()">&times;</button>
+        <div class="mobile-nav-inner">
+            <a href="#home" onclick="toggleMobileNav()">Главная</a>
+            <a href="#catalog" onclick="toggleMobileNav()">Каталог</a>
+            <a href="#brands" onclick="toggleMobileNav()">Бренды</a>
+            <a href="#about" onclick="toggleMobileNav()">О нас</a>
+            <a href="#contact" onclick="toggleMobileNav()">Контакты</a>
+            <a href="javascript:void(0)" onclick="toggleMobileNav(); openModal();" style="color: var(--gold);">Оставить заявку</a>
+        </div>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <img src="images/hero_main.jpg" alt="Премиальный интерьер">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-crown"></i>
+                <span>Премиальная мебель</span>
+                <i class="fas fa-crown"></i>
+            </div>
+            <h1>Искусство жить <em>красиво</em></h1>
+            <p>Эксклюзивные коллекции от ведущих европейских и турецких брендов. Мебель, которая создаёт атмосферу роскоши и комфорта.</p>
+            <div class="hero-buttons">
+                <a href="#catalog" class="hero-btn hero-btn-primary"><i class="fas fa-th-large"></i> Смотреть каталог</a>
+                <a href="#contact" class="hero-btn hero-btn-secondary"><i class="fas fa-calendar-check"></i> Записаться на визит</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <div class="hero-scroll-icon"></div>
+        </div>
+    </section>
+
+    <div class="marquee-strip">
+        <div class="marquee-track">
+            <div class="marquee-item"><i class="fas fa-gem"></i> YOL Living</div>
+            <div class="marquee-item"><i class="fas fa-star"></i> Bomonti Furniture</div>
+            <div class="marquee-item"><i class="fas fa-crown"></i> Natuzzi Italia</div>
+            <div class="marquee-item"><i class="fas fa-shield-alt"></i> Фурнитура HAFELE</div>
+            <div class="marquee-item"><i class="fas fa-paint-brush"></i> Лак SIRCA Italy</div>
+            <div class="marquee-item"><i class="fas fa-leaf"></i> Экологичные материалы</div>
+            <div class="marquee-item"><i class="fas fa-truck"></i> Доставка по Казахстану</div>
+            <div class="marquee-item"><i class="fas fa-tools"></i> Профессиональная сборка</div>
+            <div class="marquee-item"><i class="fas fa-gem"></i> YOL Living</div>
+            <div class="marquee-item"><i class="fas fa-star"></i> Bomonti Furniture</div>
+            <div class="marquee-item"><i class="fas fa-crown"></i> Natuzzi Italia</div>
+            <div class="marquee-item"><i class="fas fa-shield-alt"></i> Фурнитура HAFELE</div>
+            <div class="marquee-item"><i class="fas fa-paint-brush"></i> Лак SIRCA Italy</div>
+            <div class="marquee-item"><i class="fas fa-leaf"></i> Экологичные материалы</div>
+            <div class="marquee-item"><i class="fas fa-truck"></i> Доставка по Казахстану</div>
+            <div class="marquee-item"><i class="fas fa-tools"></i> Профессиональная сборка</div>
+        </div>
+    </div>
+
+    <section class="advantages">
+        <div class="advantages-grid">
+            <div class="advantage-card reveal">
+                <div class="advantage-icon"><i class="fas fa-award"></i></div>
+                <h3>Европейское качество</h3>
+                <p>Фурнитура HAFELE, итальянские лаки SIRCA, экологичные материалы от лучших мировых производителей</p>
+            </div>
+            <div class="advantage-card reveal reveal-delay-1">
+                <div class="advantage-icon"><i class="fas fa-gem"></i></div>
+                <h3>Эксклюзивные бренды</h3>
+                <p>Официальный представитель YOL Living, Bomonti и декора Natuzzi Italia в Казахстане</p>
+            </div>
+            <div class="advantage-card reveal reveal-delay-2">
+                <div class="advantage-icon"><i class="fas fa-user-tie"></i></div>
+                <h3>Персональный подход</h3>
+                <p>Индивидуальный подбор мебели с учётом особенностей вашего пространства и стиля жизни</p>
+            </div>
+            <div class="advantage-card reveal reveal-delay-3">
+                <div class="advantage-icon"><i class="fas fa-shipping-fast"></i></div>
+                <h3>Доставка и сборка</h3>
+                <p>Профессиональная доставка по всему Казахстану с гарантией сохранности и аккуратной сборкой</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="brands" id="brands">
+        <div class="brands-header">
+            <div class="section-label reveal">Наши бренды</div>
+            <h2 class="section-title reveal">Коллекции от мировых<br>производителей</h2>
+            <div class="deco-dots reveal"><span></span><span></span><span></span><span></span><span></span></div>
+            <p class="section-subtitle reveal" style="margin: 0 auto;">Мы сотрудничаем с лучшими мебельными домами, чтобы предложить вам безупречное качество и современный дизайн</p>
+        </div>
+        <div class="brands-grid">
+            <div class="brand-card reveal">
+                <img src="images/siena_1.jpg" alt="YOL Living">
+                <div class="brand-card-overlay">
+                    <div class="brand-card-icon"><i class="fas fa-couch"></i></div>
+                    <h3>YOL Living</h3>
+                    <p>Турецкий бренд премиальной мебели. Модульные диваны, изысканные столовые и спальни.</p>
+                    <a href="#catalog" class="brand-card-link"><i class="fas fa-arrow-right"></i> Смотреть коллекцию</a>
+                </div>
+            </div>
+            <div class="brand-card reveal reveal-delay-1">
+                <img src="images/balance_sofa.jpg" alt="Bomonti">
+                <div class="brand-card-overlay">
+                    <div class="brand-card-icon"><i class="fas fa-star"></i></div>
+                    <h3>Bomonti</h3>
+                    <p>Минималистичный дизайн и безупречная функциональность. Полные коллекции для жизни.</p>
+                    <a href="#catalog" class="brand-card-link"><i class="fas fa-arrow-right"></i> Смотреть коллекцию</a>
+                </div>
+            </div>
+            <div class="brand-card reveal reveal-delay-2">
+                <img src="images/nessa_1.jpg" alt="Декор">
+                <div class="brand-card-overlay">
+                    <div class="brand-card-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Декор и аксессуары</h3>
+                    <p>Освещение, ковры, зеркала и аксессуары в стиле Natuzzi Italia для идеального интерьера.</p>
+                    <a href="#catalog" class="brand-card-link"><i class="fas fa-arrow-right"></i> Смотреть коллекцию</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="catalog" id="catalog">
+        <div class="catalog-header">
+            <div class="section-label reveal">Каталог</div>
+            <h2 class="section-title reveal">Наши коллекции</h2>
+            <div class="deco-dots reveal"><span></span><span></span><span></span><span></span><span></span></div>
+            <p class="section-subtitle reveal" style="margin: 0 auto;">Откройте для себя мебель, которая сочетает изысканный дизайн, непревзойдённый комфорт и безупречное качество</p>
+        </div>
+        <div class="catalog-filters reveal">
+            <button class="catalog-filter active" data-filter="all"><i class="fas fa-th"></i> Все</button>
+            <button class="catalog-filter" data-filter="sofa"><i class="fas fa-couch"></i> Диваны</button>
+            <button class="catalog-filter" data-filter="dining"><i class="fas fa-utensils"></i> Столовые</button>
+            <button class="catalog-filter" data-filter="bedroom"><i class="fas fa-bed"></i> Спальни</button>
+            <button class="catalog-filter" data-filter="tv"><i class="fas fa-tv"></i> TV-зоны</button>
+            <button class="catalog-filter" data-filter="decor"><i class="fas fa-palette"></i> Декор</button>
+        </div>
+        <div class="catalog-grid" id="catalogGrid">
+
+            <div class="product-card reveal" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/legato_1.jpg" alt="LEGATO Sofa">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>LEGATO</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Модульный диван</div>
+                    <p>Изысканное сочетание льна и кожи со стёжкой. Модульная система для любой конфигурации.</p>
+                    <button class="product-btn" onclick="openModal('LEGATO — модульный диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/siena_2.jpg" alt="SIENA Sofa">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>SIENA</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Диван / Угловой / Арка</div>
+                    <p>Каркас из фанеры и бука. Подушки с бисерным силиконом. Три формата: классический, угловой и арка.</p>
+                    <button class="product-btn" onclick="openModal('SIENA — диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/mila_1.jpg" alt="MILA Sofa">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>MILA</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Модульный диван</div>
+                    <p>Комбинация льна и экокожи с техникой плиссировки. Широкий механизм DSS для максимального комфорта.</p>
+                    <button class="product-btn" onclick="openModal('MILA — модульный диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/buma_1.jpg" alt="BUMA Sofa">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>BUMA</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Модульный диван</div>
+                    <p>Система Crocodile Clip для надёжного соединения модулей. Ткань Yankı с прочностью 35 000 Martindale.</p>
+                    <button class="product-btn" onclick="openModal('BUMA — модульный диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/simba_1.jpg" alt="SIMBA Sofa">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>SIMBA</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Модульный диван</div>
+                    <p>Изогнутые спинки для эстетического великолепия. DSS-механизм с глубиной раскладывания 32 см.</p>
+                    <button class="product-btn" onclick="openModal('SIMBA — модульный диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/sirma_1.jpg" alt="SIRMA Sofa">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>SIRMA</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Диван</div>
+                    <p>Стёганый декор на подлокотниках. Кант для изящного силуэта. DSS-механизм для глубокой посадки.</p>
+                    <button class="product-btn" onclick="openModal('SIRMA — диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/franka_1.jpg" alt="FRANKA Sofa">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>FRANKA</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Модульный диван</div>
+                    <p>Гиперпена для мягких спинок. Наполнение из бисерного силикона, пуха и пены.</p>
+                    <button class="product-btn" onclick="openModal('FRANKA — модульный диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/nita_1.jpg" alt="NITA Sofa">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>NITA</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Диван и релакс</div>
+                    <p>Зигзаг-пружины и эластичные колонны. Ножки из бука первого сорта. Механизм DSS.</p>
+                    <button class="product-btn" onclick="openModal('NITA — диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/loretta_1.jpg" alt="LORETTA Sofa">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>LORETTA</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Модульный диван</div>
+                    <p>Кант на спинках и подлокотниках. Подушки с гусиным пухом, бисерным силиконом.</p>
+                    <button class="product-btn" onclick="openModal('LORETTA — модульный диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="dining">
+                <div class="product-card-image">
+                    <img src="images/aria_1.jpg" alt="ARIA Dining">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>ARIA</h3>
+                    <div class="product-type"><i class="fas fa-utensils"></i> Столовая</div>
+                    <p>Глянцевый MDF с ножками из нержавеющей стали ручной покраски. Комод, стол, ТВ-юнит.</p>
+                    <button class="product-btn" onclick="openModal('ARIA — столовая')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="dining">
+                <div class="product-card-image">
+                    <img src="images/valencia_1.jpg" alt="VALENCIA Dining">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>VALENCIA</h3>
+                    <div class="product-type"><i class="fas fa-utensils"></i> Столовая</div>
+                    <p>Натуральный шпон дерева. Настенный монтаж French Cleat. Фурнитура HAFELE немецкого качества.</p>
+                    <button class="product-btn" onclick="openModal('VALENCIA — столовая')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="dining">
+                <div class="product-card-image">
+                    <img src="images/nessa_2.jpg" alt="NESSA Dining">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>NESSA</h3>
+                    <div class="product-type"><i class="fas fa-utensils"></i> Столовая</div>
+                    <p>Натуральный камень между дверцами. Ножки из бука первого сорта. Мраморная столешница.</p>
+                    <button class="product-btn" onclick="openModal('NESSA — столовая')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="dining">
+                <div class="product-card-image">
+                    <img src="images/destina_1.jpg" alt="DESTINA Dining">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>DESTINA</h3>
+                    <div class="product-type"><i class="fas fa-utensils"></i> Столовая</div>
+                    <p>Итальянский лак SIRCA, краска GENÇ без свинца. Фурнитура HAFELE и системы HETTICH.</p>
+                    <button class="product-btn" onclick="openModal('DESTINA — столовая')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="dining">
+                <div class="product-card-image">
+                    <img src="images/hugo_dining.jpg" alt="HUGO Dining">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>HUGO</h3>
+                    <div class="product-type"><i class="fas fa-utensils"></i> Столовая</div>
+                    <p>Натуральный шпон MDF 18 мм. Закалённое дымчатое стекло 8 мм. French Cleat монтаж.</p>
+                    <button class="product-btn" onclick="openModal('HUGO — столовая')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/statue_1.jpg" alt="STATUE Sofa">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>STATUE</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Диванный гарнитур</div>
+                    <p>Мягкие текстуры с деревянными деталями. Натуральная палитра для стильного пространства.</p>
+                    <button class="product-btn" onclick="openModal('STATUE — диванный гарнитур')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/morphose_sofa.jpg" alt="MORPHOSE Sofa">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>MORPHOSE</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Диванный гарнитур</div>
+                    <p>Минимализм и многофункциональность. Простые линии для расслабляющего пространства.</p>
+                    <button class="product-btn" onclick="openModal('MORPHOSE — диванный гарнитур')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/balance_corner.jpg" alt="BALANCE Corner">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>BALANCE</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Угловой диван</div>
+                    <p>Современный минималистичный подход. Тонкие ножки, персонализация цвета и текстуры.</p>
+                    <button class="product-btn" onclick="openModal('BALANCE — угловой диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/grande_1.jpg" alt="GRANDE Corner">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>GRANDE</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Угловой диван</div>
+                    <p>Широкая и удобная структура для больших пространств. Современные линии и комфорт.</p>
+                    <button class="product-btn" onclick="openModal('GRANDE — угловой диван')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/picasso_1.jpg" alt="PICASSO Sofa">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>PICASSO</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Диванный гарнитур</div>
+                    <p>Атмосфера арт-галереи в вашем доме. Эстетические линии и мягкие текстуры.</p>
+                    <button class="product-btn" onclick="openModal('PICASSO — диванный гарнитур')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/venus_1.jpg" alt="VENUS Sofa">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>VENUS</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Диванный гарнитур</div>
+                    <p>Геометрические ножки и чистые линии. Функциональный и современный дизайн.</p>
+                    <button class="product-btn" onclick="openModal('VENUS — диванный гарнитур')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/asia_1.jpg" alt="ASIA Sofa">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>ASIA</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Диван и релакс</div>
+                    <p>Минималистичные линии и нейтральная палитра. Органические штрихи и благородные детали.</p>
+                    <button class="product-btn" onclick="openModal('ASIA — диван и релакс')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="sofa">
+                <div class="product-card-image">
+                    <img src="images/oslo_1.jpg" alt="OSLO Corner">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>OSLO</h3>
+                    <div class="product-type"><i class="fas fa-couch"></i> Угловой модульный</div>
+                    <p>Модульная мобильность и современный стиль. Натуральные цвета для уюта.</p>
+                    <button class="product-btn" onclick="openModal('OSLO — угловой модульный')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="dining">
+                <div class="product-card-image">
+                    <img src="images/matera_dining.jpg" alt="MATERA Dining">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>MATERA</h3>
+                    <div class="product-type"><i class="fas fa-utensils"></i> Столовая</div>
+                    <p>USB-зарядка и беспроводные зоны. Технологии для комфорта. Консоль, стол, стулья.</p>
+                    <button class="product-btn" onclick="openModal('MATERA — столовая')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="dining">
+                <div class="product-card-image">
+                    <img src="images/arcadia_dining.jpg" alt="ARCADIA Dining">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>ARCADIA</h3>
+                    <div class="product-type"><i class="fas fa-utensils"></i> Столовая</div>
+                    <p>Современные минималистичные линии. Тепло натуральных материалов и современный дизайн.</p>
+                    <button class="product-btn" onclick="openModal('ARCADIA — столовая')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="dining">
+                <div class="product-card-image">
+                    <img src="images/morphose_1.jpg" alt="MORPHOSE Dining">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>MORPHOSE</h3>
+                    <div class="product-type"><i class="fas fa-utensils"></i> Столовая</div>
+                    <p>Элегантность в каждой детали. Простой и стильный дизайн для освежающей атмосферы.</p>
+                    <button class="product-btn" onclick="openModal('MORPHOSE — столовая')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="dining">
+                <div class="product-card-image">
+                    <img src="images/balance_dining.jpg" alt="BALANCE Dining">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>BALANCE</h3>
+                    <div class="product-type"><i class="fas fa-utensils"></i> Столовая</div>
+                    <p>Традиционная элегантность с современными штрихами. Тепло натурального дерева.</p>
+                    <button class="product-btn" onclick="openModal('BALANCE — столовая')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="tv">
+                <div class="product-card-image">
+                    <img src="images/hugo_tv.jpg" alt="HUGO TV">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>HUGO</h3>
+                    <div class="product-type"><i class="fas fa-tv"></i> TV-зона</div>
+                    <p>Шпон натурального дерева. Полки из закалённого дымчатого стекла. French Cleat.</p>
+                    <button class="product-btn" onclick="openModal('HUGO — TV-зона')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="tv">
+                <div class="product-card-image">
+                    <img src="images/destina_2.jpg" alt="DESTINA TV">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>DESTINA</h3>
+                    <div class="product-type"><i class="fas fa-tv"></i> TV-зона</div>
+                    <p>Первоклассный MDF 18 мм. Выдвижные системы HETTICH для плавной работы ящиков.</p>
+                    <button class="product-btn" onclick="openModal('DESTINA — TV-зона')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="bedroom">
+                <div class="product-card-image">
+                    <img src="images/letra_bed.jpg" alt="LETRA Bedroom">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>LETRA</h3>
+                    <div class="product-type"><i class="fas fa-bed"></i> Спальня</div>
+                    <p>Фанера Dafne LTR 18 мм. Двери: дерево или стекло. Кровать 160/180/200 см, комоды.</p>
+                    <button class="product-btn" onclick="openModal('LETRA — спальня')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="bedroom">
+                <div class="product-card-image">
+                    <img src="images/hugo_bed.jpg" alt="HUGO Bedroom">
+                    <span class="product-card-badge"><i class="fas fa-gem"></i> YOL Living</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>HUGO</h3>
+                    <div class="product-type"><i class="fas fa-bed"></i> Спальня</div>
+                    <p>Изголовье из премиальной кожи со стёжкой. Боковые панели в тон. Фурнитура HAFELE.</p>
+                    <button class="product-btn" onclick="openModal('HUGO — спальня')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="bedroom">
+                <div class="product-card-image">
+                    <img src="images/morphose_bed.jpg" alt="MORPHOSE Bedroom">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>MORPHOSE</h3>
+                    <div class="product-type"><i class="fas fa-bed"></i> Спальня</div>
+                    <p>Минималистичные линии, покой и комфорт. Шкаф, кровать, шифоньер, комод, зеркало.</p>
+                    <button class="product-btn" onclick="openModal('MORPHOSE — спальня')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="bedroom">
+                <div class="product-card-image">
+                    <img src="images/balance_bed.jpg" alt="BALANCE Bedroom">
+                    <span class="product-card-badge"><i class="fas fa-star"></i> Bomonti</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>BALANCE</h3>
+                    <div class="product-type"><i class="fas fa-bed"></i> Спальня</div>
+                    <p>Натуральное дерево и современный дизайн. Модульная система гардероба. Гармония.</p>
+                    <button class="product-btn" onclick="openModal('BALANCE — спальня')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-2" data-category="decor">
+                <div class="product-card-image">
+                    <img src="images/nessa_1.jpg" alt="Освещение">
+                    <span class="product-card-badge"><i class="fas fa-palette"></i> Декор</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>Освещение</h3>
+                    <div class="product-type"><i class="fas fa-lightbulb"></i> Люстры и светильники</div>
+                    <p>Коллекции Rose, Solene, NOLA — дизайнерское освещение в стиле итальянских интерьеров.</p>
+                    <button class="product-btn" onclick="openModal('Освещение — декор')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-category="decor">
+                <div class="product-card-image">
+                    <img src="images/valencia_2.jpg" alt="Ковры">
+                    <span class="product-card-badge"><i class="fas fa-palette"></i> Декор</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>Ковры и текстиль</h3>
+                    <div class="product-type"><i class="fas fa-border-all"></i> Ковры, пледы, подушки</div>
+                    <p>Коллекция Pagoda и авторские ковры. Домашний текстиль для завершения интерьера.</p>
+                    <button class="product-btn" onclick="openModal('Ковры и текстиль')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal reveal-delay-1" data-category="decor">
+                <div class="product-card-image">
+                    <img src="images/angel_1.jpg" alt="Аксессуары">
+                    <span class="product-card-badge"><i class="fas fa-palette"></i> Декор</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>Аксессуары</h3>
+                    <div class="product-type"><i class="fas fa-vase"></i> Вазы, свечи, зеркала</div>
+                    <p>Коллекции Sea, Taper, Ring, Lava — предметы декора для утончённого интерьера.</p>
+                    <button class="product-btn" onclick="openModal('Аксессуары — декор')"><i class="fas fa-tag"></i> Узнать цену</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="showcase">
+        <div class="showcase-bg">
+            <img src="images/balance_sofa.jpg" alt="Шоурум">
+        </div>
+        <div class="showcase-overlay"></div>
+        <div class="showcase-content reveal">
+            <div class="section-label"><i class="fas fa-store"></i> Шоурум</div>
+            <h2>Посетите наш салон</h2>
+            <p>Оцените качество материалов и комфорт мебели лично. Наши консультанты помогут подобрать идеальное решение.</p>
+            <div class="showcase-features">
+                <div class="showcase-feature"><i class="fas fa-ruler-combined"></i><span>3D проект</span></div>
+                <div class="showcase-feature"><i class="fas fa-hand-holding-heart"></i><span>Консультация</span></div>
+                <div class="showcase-feature"><i class="fas fa-palette"></i><span>Образцы тканей</span></div>
+                <div class="showcase-feature"><i class="fas fa-coffee"></i><span>Кофе в подарок</span></div>
+            </div>
+            <a href="#contact" class="hero-btn hero-btn-primary"><i class="fas fa-calendar-check"></i> Записаться на визит</a>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-image reveal">
+                <img src="images/arcadia_sofa.jpg" alt="О салоне MAISON DESIGN">
+                <div class="about-image-badge">
+                    <div class="number">10+</div>
+                    <div class="label">лет опыта</div>
+                </div>
+            </div>
+            <div class="about-text">
+                <div class="section-label reveal" style="justify-content: flex-start;"><span style="display:none;"></span>О салоне</div>
+                <h2 class="section-title reveal">MAISON DESIGN</h2>
+                <div class="deco-line reveal"></div>
+                <p class="reveal">Мы создаём пространства, в которых хочется жить. MAISON DESIGN — это салон премиальной мебели, где каждый предмет тщательно отобран нашими экспертами за качество исполнения, дизайн и долговечность.</p>
+                <p class="reveal">Наши коллекции от YOL Living и Bomonti представляют лучшие традиции турецкого мебельного производства: ручная работа мастеров, немецкая фурнитура HAFELE, итальянские лаки SIRCA.</p>
+                <div class="about-stats reveal">
+                    <div class="about-stat">
+                        <i class="fas fa-home"></i>
+                        <div class="about-stat-number">500+</div>
+                        <div class="about-stat-text">Проектов</div>
+                    </div>
+                    <div class="about-stat">
+                        <i class="fas fa-crown"></i>
+                        <div class="about-stat-number">3</div>
+                        <div class="about-stat-text">Бренда</div>
+                    </div>
+                    <div class="about-stat">
+                        <i class="fas fa-heart"></i>
+                        <div class="about-stat-number">98%</div>
+                        <div class="about-stat-text">Довольных клиентов</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="section-label reveal">Контакты</div>
+                <h2 class="section-title reveal" style="color: var(--white);">Свяжитесь с нами</h2>
+                <p class="reveal">Мы готовы ответить на ваши вопросы, помочь с выбором мебели и рассчитать стоимость вашего проекта.</p>
+                <ul class="contact-details reveal">
+                    <li>
+                        <div class="icon-wrap"><i class="fas fa-map-marker-alt"></i></div>
+                        <div><strong>Адрес</strong> г. Алматы, пр. Аль-Фараби 77/8, ТРЦ Esentai Mall, 2 этаж</div>
+                    </li>
+                    <li>
+                        <div class="icon-wrap"><i class="fas fa-phone-alt"></i></div>
+                        <div><strong>Телефон</strong> +7 (727) 000-00-00</div>
+                    </li>
+                    <li>
+                        <div class="icon-wrap"><i class="fas fa-envelope"></i></div>
+                        <div><strong>Email</strong> info@maisondesign.kz</div>
+                    </li>
+                    <li>
+                        <div class="icon-wrap"><i class="fas fa-clock"></i></div>
+                        <div><strong>График</strong> Пн-Вс: 10:00 — 21:00</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="contact-form reveal">
+                <h3><i class="fas fa-paper-plane"></i> Оставить заявку</h3>
+                <p style="color: rgba(255,255,255,0.4); margin-bottom: 1rem; font-size: 0.85rem;">Заполните форму и мы свяжемся с вами в течение часа</p>
+                <div class="form-group">
+                    <input type="text" placeholder="Ваше имя" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Телефон" required>
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Сообщение (какая мебель вас интересует?)"></textarea>
+                    <i class="fas fa-comment"></i>
+                </div>
+                <button class="submit-btn"><i class="fas fa-arrow-right"></i> Отправить заявку</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-logo"><i class="fas fa-gem"></i> MAISON <span>DESIGN</span></div>
+        <ul class="footer-links">
+            <li><a href="#catalog">Каталог</a></li>
+            <li><a href="#brands">Бренды</a></li>
+            <li><a href="#about">О нас</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <div class="footer-social">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+    <div class="modal" id="modal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <h3><i class="fas fa-tag"></i> Узнать цену</h3>
+        <p id="modalProduct">Оставьте заявку и мы свяжемся с вами</p>
+        <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+            <div class="form-group">
+                <input type="text" placeholder="Ваше имя" required>
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="form-group">
+                <input type="tel" placeholder="Телефон" required>
+                <i class="fas fa-phone"></i>
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Комментарий" style="min-height: 60px;"></textarea>
+                <i class="fas fa-comment"></i>
+            </div>
+            <button class="submit-btn" onclick="closeModal()" style="width:100%; justify-content:center;"><i class="fas fa-paper-plane"></i> Отправить</button>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
+
+    <script>
+        const header = document.getElementById('header');
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 80);
+            backToTop.classList.toggle('visible', window.scrollY > 500);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        document.querySelectorAll('.catalog-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.catalog-filter').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                document.querySelectorAll('.product-card').forEach(card => {
+                    const show = filter === 'all' || card.dataset.category === filter;
+                    card.setAttribute('data-hidden', !show);
+                    card.style.display = show ? '' : 'none';
+                });
+            });
+        });
+
+        function openModal(product) {
+            document.getElementById('modalOverlay').classList.add('active');
+            document.getElementById('modal').classList.add('active');
+            document.getElementById('modalProduct').textContent = product || 'Оставьте заявку и мы свяжемся с вами';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('active');
+        }
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
+                e.preventDefault();
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
