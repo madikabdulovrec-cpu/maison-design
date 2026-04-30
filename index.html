@@ -2544,5 +2544,720 @@
             }
         });
     </script>
+
+<!-- ===== ADMIN PANEL ===== -->
+<style>
+/* Admin Trigger */
+.admin-gear{position:fixed;bottom:24px;left:24px;width:48px;height:48px;background:var(--black-deep);border-radius:50%;display:none;align-items:center;justify-content:center;color:var(--gold);font-size:1.1rem;cursor:pointer;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,.4);transition:var(--transition)}.admin-gear:hover{transform:scale(1.12) rotate(90deg);box-shadow:var(--shadow-gold)}.admin-gear.visible{display:flex}
+
+/* Admin Overlay */
+.admin-overlay{position:fixed;inset:0;background:rgba(15,15,26,.92);backdrop-filter:blur(12px);z-index:100000;display:none;overflow:auto;opacity:0;transition:opacity .35s ease}
+.admin-overlay.open{display:flex;opacity:1}
+
+/* Admin Shell */
+.admin-shell{width:100%;max-width:1200px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:20px;min-height:100vh}
+.admin-topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:rgba(26,26,46,.85);border:1px solid rgba(201,169,110,.15);border-radius:14px;backdrop-filter:blur(10px)}
+.admin-topbar h1{font-family:var(--font-display);font-size:1.35rem;font-weight:500;color:var(--gold-light);display:flex;align-items:center;gap:10px}
+.admin-topbar h1 i{font-size:.9rem;color:var(--gold)}
+.admin-topbar-actions{display:flex;gap:10px}
+
+/* Admin Buttons */
+.adm-btn{padding:8px 18px;border-radius:8px;font-size:.78rem;font-weight:600;letter-spacing:.04em;font-family:var(--font-body);display:inline-flex;align-items:center;gap:7px;transition:var(--transition);cursor:pointer;border:none}
+.adm-btn-gold{background:linear-gradient(135deg,var(--gold),var(--terracotta-muted));color:var(--white)}.adm-btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.adm-btn-outline{background:transparent;border:1px solid rgba(201,169,110,.35);color:var(--gold-light)}.adm-btn-outline:hover{background:rgba(201,169,110,.1);border-color:var(--gold)}
+.adm-btn-danger{background:rgba(220,53,69,.15);color:#ff6b6b;border:1px solid rgba(220,53,69,.25)}.adm-btn-danger:hover{background:rgba(220,53,69,.25)}
+.adm-btn-sm{padding:6px 12px;font-size:.72rem}
+
+/* Admin Toolbar */
+.admin-toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.admin-search{flex:1;min-width:200px;position:relative}
+.admin-search input{width:100%;padding:10px 14px 10px 38px;background:rgba(26,26,46,.7);border:1px solid rgba(201,169,110,.15);border-radius:10px;color:var(--cream);font-size:.85rem;font-family:var(--font-body);outline:none;transition:var(--transition)}
+.admin-search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,.1)}
+.admin-search input::placeholder{color:rgba(254,252,249,.3)}
+.admin-search i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:.8rem}
+.admin-filter-select{padding:10px 14px;background:rgba(26,26,46,.7);border:1px solid rgba(201,169,110,.15);border-radius:10px;color:var(--cream);font-size:.82rem;font-family:var(--font-body);outline:none;cursor:pointer}
+.admin-filter-select:focus{border-color:var(--gold)}
+.admin-filter-select option{background:var(--black-deep);color:var(--cream)}
+
+/* Product List */
+.admin-products{display:flex;flex-direction:column;gap:8px}
+.admin-product-row{display:grid;grid-template-columns:56px 1fr 120px 100px 120px;align-items:center;gap:14px;padding:12px 16px;background:rgba(26,26,46,.6);border:1px solid rgba(201,169,110,.08);border-radius:10px;transition:var(--transition)}
+.admin-product-row:hover{background:rgba(26,26,46,.85);border-color:rgba(201,169,110,.2)}
+.admin-product-thumb{width:48px;height:48px;border-radius:8px;object-fit:cover;border:1px solid rgba(201,169,110,.12)}
+.admin-product-name{font-size:.9rem;font-weight:500;color:var(--cream)}
+.admin-product-name small{display:block;font-size:.72rem;font-weight:300;color:var(--gray);margin-top:2px}
+.admin-product-cat{font-size:.72rem;color:var(--gold-light);background:rgba(201,169,110,.1);padding:4px 10px;border-radius:6px;text-align:center;text-transform:uppercase;letter-spacing:.05em}
+.admin-product-price{font-size:.85rem;font-weight:500;color:var(--cream);text-align:right}
+.admin-product-actions{display:flex;gap:6px;justify-content:flex-end}
+
+/* Empty state */
+.admin-empty{text-align:center;padding:60px 20px;color:var(--gray)}
+.admin-empty i{font-size:2.5rem;color:rgba(201,169,110,.3);margin-bottom:16px;display:block}
+.admin-empty p{font-size:.9rem;margin-bottom:20px}
+
+/* Admin Modal (product form) */
+.admin-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100002;display:none;align-items:center;justify-content:center;padding:20px}
+.admin-modal-bg.open{display:flex}
+.admin-modal{background:var(--black-deep);border:1px solid rgba(201,169,110,.15);border-radius:16px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;padding:0}
+.admin-modal-header{padding:20px 24px;border-bottom:1px solid rgba(201,169,110,.1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--black-deep);z-index:2;border-radius:16px 16px 0 0}
+.admin-modal-header h2{font-family:var(--font-display);font-size:1.2rem;font-weight:500;color:var(--gold-light)}
+.admin-modal-close{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:1rem;cursor:pointer;transition:var(--transition);background:transparent;border:none}.admin-modal-close:hover{background:rgba(255,255,255,.08);color:var(--cream)}
+.admin-modal-body{padding:24px}
+.admin-form-group{margin-bottom:18px}
+.admin-form-group label{display:block;font-size:.78rem;font-weight:600;color:var(--gold-light);margin-bottom:6px;letter-spacing:.03em;text-transform:uppercase}
+.admin-form-group input,.admin-form-group textarea,.admin-form-group select{width:100%;padding:10px 14px;background:rgba(26,26,46,.7);border:1px solid rgba(201,169,110,.15);border-radius:8px;color:var(--cream);font-size:.88rem;font-family:var(--font-body);outline:none;transition:var(--transition)}
+.admin-form-group input:focus,.admin-form-group textarea:focus,.admin-form-group select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,.08)}
+.admin-form-group textarea{min-height:80px;resize:vertical}
+.admin-form-group select option{background:var(--black-deep);color:var(--cream)}
+.admin-form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.admin-form-toggle{display:flex;align-items:center;gap:10px;cursor:pointer}
+.admin-form-toggle input[type=checkbox]{display:none}
+.admin-toggle-track{width:42px;height:22px;background:rgba(255,255,255,.12);border-radius:11px;position:relative;transition:var(--transition)}.admin-toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:var(--gray);border-radius:50%;transition:var(--transition)}
+.admin-form-toggle input:checked+.admin-toggle-track{background:var(--gold)}.admin-form-toggle input:checked+.admin-toggle-track::after{left:23px;background:var(--white)}
+.admin-toggle-label{font-size:.82rem;color:var(--cream)}
+
+/* Photo upload */
+.admin-photos{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.admin-photo-slot{width:96px;height:96px;border-radius:10px;border:2px dashed rgba(201,169,110,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;transition:var(--transition);background:rgba(26,26,46,.5)}
+.admin-photo-slot:hover{border-color:var(--gold);background:rgba(201,169,110,.05)}
+.admin-photo-slot.has-photo{border-style:solid;border-color:rgba(201,169,110,.2)}
+.admin-photo-slot img{width:100%;height:100%;object-fit:cover}
+.admin-photo-slot .photo-add-icon{color:rgba(201,169,110,.4);font-size:1.4rem}
+.admin-photo-slot .photo-remove{position:absolute;top:4px;right:4px;width:22px;height:22px;background:rgba(220,53,69,.85);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.65rem;cursor:pointer;opacity:0;transition:var(--transition);border:none;z-index:2}
+.admin-photo-slot:hover .photo-remove{opacity:1}
+.admin-photo-slot.dragging{opacity:.5;border-color:var(--gold)}
+.admin-photo-slot.drag-over{border-color:var(--gold);background:rgba(201,169,110,.15);transform:scale(1.05)}
+.admin-modal-footer{padding:16px 24px;border-top:1px solid rgba(201,169,110,.1);display:flex;justify-content:flex-end;gap:10px;position:sticky;bottom:0;background:var(--black-deep);border-radius:0 0 16px 16px}
+
+/* Login dialog */
+.admin-login-bg{position:fixed;inset:0;background:rgba(15,15,26,.95);backdrop-filter:blur(16px);z-index:100001;display:none;align-items:center;justify-content:center;padding:20px}.admin-login-bg.open{display:flex}
+.admin-login{background:var(--black-deep);border:1px solid rgba(201,169,110,.2);border-radius:18px;padding:40px;max-width:380px;width:100%;text-align:center}
+.admin-login h2{font-family:var(--font-display);font-size:1.4rem;font-weight:500;color:var(--gold-light);margin-bottom:6px}
+.admin-login p{font-size:.82rem;color:var(--gray);margin-bottom:24px}
+.admin-login input{width:100%;padding:12px 16px;background:rgba(26,26,46,.7);border:1px solid rgba(201,169,110,.15);border-radius:10px;color:var(--cream);font-size:.9rem;font-family:var(--font-body);outline:none;margin-bottom:16px;text-align:center;letter-spacing:.15em}.admin-login input:focus{border-color:var(--gold)}
+.admin-login .login-error{color:#ff6b6b;font-size:.78rem;margin-bottom:12px;display:none}
+
+/* Stats bar */
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.admin-stat-card{padding:14px 18px;background:rgba(26,26,46,.6);border:1px solid rgba(201,169,110,.08);border-radius:10px;text-align:center}
+.admin-stat-card .stat-num{font-size:1.4rem;font-weight:600;color:var(--gold-light);font-family:var(--font-display)}
+.admin-stat-card .stat-label{font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+
+/* Responsive admin */
+@media(max-width:768px){
+.admin-shell{padding:14px}
+.admin-topbar{flex-direction:column;gap:12px;text-align:center;padding:14px}
+.admin-topbar-actions{flex-wrap:wrap;justify-content:center}
+.admin-product-row{grid-template-columns:48px 1fr;gap:10px;padding:10px 12px}
+.admin-product-row .admin-product-cat,.admin-product-row .admin-product-price{display:none}
+.admin-product-actions{grid-column:1/-1;justify-content:flex-start}
+.admin-form-row{grid-template-columns:1fr}
+.admin-toolbar{flex-direction:column}
+.admin-modal{max-width:100%;margin:10px;max-height:95vh}
+.admin-stats{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<!-- Admin Gear Trigger -->
+<div class="admin-gear" id="adminGear" title="Админ-панель"><i class="fas fa-cog"></i></div>
+
+<!-- Admin Login -->
+<div class="admin-login-bg" id="adminLoginBg">
+    <div class="admin-login">
+        <i class="fas fa-lock" style="font-size:2rem;color:var(--gold);margin-bottom:16px;display:block"></i>
+        <h2>Вход в панель</h2>
+        <p>Введите пароль администратора</p>
+        <div class="login-error" id="loginError">Неверный пароль</div>
+        <input type="password" id="adminPwdInput" placeholder="Пароль" autocomplete="off">
+        <button class="adm-btn adm-btn-gold" style="width:100%;justify-content:center;padding:12px" onclick="adminTryLogin()"><i class="fas fa-sign-in-alt"></i> Войти</button>
+        <button class="adm-btn adm-btn-outline" style="width:100%;justify-content:center;padding:10px;margin-top:8px" onclick="adminCloseLogin()"><i class="fas fa-times"></i> Отмена</button>
+    </div>
+</div>
+
+<!-- Admin Overlay -->
+<div class="admin-overlay" id="adminOverlay">
+    <div class="admin-shell">
+        <div class="admin-topbar">
+            <h1><i class="fas fa-gem"></i> MAISON DESIGN &mdash; Управление</h1>
+            <div class="admin-topbar-actions">
+                <button class="adm-btn adm-btn-outline adm-btn-sm" onclick="adminExportJSON()"><i class="fas fa-download"></i> Экспорт</button>
+                <label class="adm-btn adm-btn-outline adm-btn-sm" style="cursor:pointer"><i class="fas fa-upload"></i> Импорт<input type="file" accept=".json" style="display:none" onchange="adminImportJSON(event)"></label>
+                <button class="adm-btn adm-btn-danger adm-btn-sm" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats" id="adminStats"></div>
+
+        <!-- Toolbar -->
+        <div class="admin-toolbar">
+            <div class="admin-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="adminSearchInput" placeholder="Поиск товаров..." oninput="adminRenderList()">
+            </div>
+            <select class="admin-filter-select" id="adminFilterCat" onchange="adminRenderList()">
+                <option value="all">Все категории</option>
+                <option value="sofa">Диваны</option>
+                <option value="dining">Столовые</option>
+                <option value="bedroom">Спальни</option>
+                <option value="tv">TV-зоны</option>
+                <option value="decor">Декор</option>
+            </select>
+            <select class="admin-filter-select" id="adminFilterBrand" onchange="adminRenderList()">
+                <option value="all">Все бренды</option>
+                <option value="YOL Living">YOL Living</option>
+                <option value="Bomonti">Bomonti</option>
+                <option value="Декор">Декор</option>
+            </select>
+            <button class="adm-btn adm-btn-gold" onclick="adminOpenForm()"><i class="fas fa-plus"></i> Добавить товар</button>
+        </div>
+
+        <!-- Product List -->
+        <div class="admin-products" id="adminProductList"></div>
+    </div>
+</div>
+
+<!-- Admin Product Form Modal -->
+<div class="admin-modal-bg" id="adminFormBg">
+    <div class="admin-modal">
+        <div class="admin-modal-header">
+            <h2 id="adminFormTitle">Новый товар</h2>
+            <button class="admin-modal-close" onclick="adminCloseForm()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="admin-modal-body">
+            <input type="hidden" id="admProdId">
+
+            <!-- Photos -->
+            <div class="admin-form-group">
+                <label><i class="fas fa-camera"></i> Фотографии (до 5)</label>
+                <div class="admin-photos" id="admPhotosContainer"></div>
+                <input type="file" id="admPhotoFileInput" accept="image/*" multiple style="display:none" onchange="adminHandlePhotoFiles(event)">
+            </div>
+
+            <!-- Name -->
+            <div class="admin-form-group">
+                <label>Название товара</label>
+                <input type="text" id="admName" placeholder="Например: LEGATO">
+            </div>
+
+            <!-- Category + Brand -->
+            <div class="admin-form-row">
+                <div class="admin-form-group">
+                    <label>Категория</label>
+                    <select id="admCategory">
+                        <option value="sofa">Диваны</option>
+                        <option value="dining">Столовые</option>
+                        <option value="bedroom">Спальни</option>
+                        <option value="tv">TV-зоны</option>
+                        <option value="decor">Декор</option>
+                    </select>
+                </div>
+                <div class="admin-form-group">
+                    <label>Бренд</label>
+                    <select id="admBrand">
+                        <option value="YOL Living">YOL Living</option>
+                        <option value="Bomonti">Bomonti</option>
+                        <option value="Декор">Декор</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Product type -->
+            <div class="admin-form-group">
+                <label>Тип товара</label>
+                <input type="text" id="admType" placeholder="Например: Модульный диван">
+            </div>
+
+            <!-- Description -->
+            <div class="admin-form-group">
+                <label>Краткое описание</label>
+                <textarea id="admDesc" placeholder="Описание товара..."></textarea>
+            </div>
+
+            <!-- Price + Toggle -->
+            <div class="admin-form-row">
+                <div class="admin-form-group">
+                    <label>Цена (&#8376;)</label>
+                    <input type="number" id="admPrice" placeholder="0" min="0">
+                </div>
+                <div class="admin-form-group" style="display:flex;align-items:flex-end;padding-bottom:2px">
+                    <label class="admin-form-toggle">
+                        <input type="checkbox" id="admShowPrice">
+                        <span class="admin-toggle-track"></span>
+                        <span class="admin-toggle-label">Показывать цену на сайте</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="admin-modal-footer">
+            <button class="adm-btn adm-btn-outline" onclick="adminCloseForm()">Отмена</button>
+            <button class="adm-btn adm-btn-gold" onclick="adminSaveProduct()"><i class="fas fa-check"></i> Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete confirm -->
+<div class="admin-modal-bg" id="adminDeleteBg">
+    <div class="admin-modal" style="max-width:400px;text-align:center">
+        <div class="admin-modal-body" style="padding:40px 24px">
+            <i class="fas fa-exclamation-triangle" style="font-size:2.5rem;color:#ff6b6b;margin-bottom:16px;display:block"></i>
+            <h3 style="font-family:var(--font-display);color:var(--cream);margin-bottom:8px">Удалить товар?</h3>
+            <p style="color:var(--gray);font-size:.88rem;margin-bottom:24px" id="adminDeleteMsg">Это действие нельзя отменить.</p>
+            <div style="display:flex;gap:10px;justify-content:center">
+                <button class="adm-btn adm-btn-outline" onclick="adminCloseDelete()">Отмена</button>
+                <button class="adm-btn adm-btn-danger" onclick="adminConfirmDelete()"><i class="fas fa-trash"></i> Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    'use strict';
+
+    /* ---- Password hash (SHA-256 of "admin123") ---- */
+    const ADMIN_PWD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
+
+    /* ---- Helpers ---- */
+    const BRAND_ICONS = {'YOL Living':'fa-gem','Bomonti':'fa-star','Декор':'fa-palette'};
+    const CAT_ICONS = {sofa:'fa-couch',dining:'fa-utensils',bedroom:'fa-bed',tv:'fa-tv',decor:'fa-palette'};
+    const CAT_NAMES = {sofa:'Диваны',dining:'Столовые',bedroom:'Спальни',tv:'TV-зоны',decor:'Декор'};
+
+    function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,8); }
+
+    async function sha256(str){
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+
+    /* ---- Storage ---- */
+    function getProducts(){ try{return JSON.parse(localStorage.getItem('md_products'))||[];}catch(e){return [];} }
+    function saveProducts(arr){ localStorage.setItem('md_products',JSON.stringify(arr)); }
+
+    /* ---- Gear visibility ---- */
+    let gearShown = false;
+    function showGear(){ if(!gearShown){gearShown=true;document.getElementById('adminGear').classList.add('visible');} }
+
+    // Ctrl+Shift+A
+    document.addEventListener('keydown',function(e){
+        if(e.ctrlKey && e.shiftKey && e.key.toUpperCase()==='A'){e.preventDefault();showGear();}
+    });
+
+    // Triple-click on footer logo
+    let footerClicks=0,footerTimer=null;
+    const footerLogo=document.querySelector('.footer-logo');
+    if(footerLogo){
+        footerLogo.addEventListener('click',function(){
+            footerClicks++;
+            clearTimeout(footerTimer);
+            footerTimer=setTimeout(()=>{footerClicks=0;},600);
+            if(footerClicks>=3){footerClicks=0;showGear();}
+        });
+    }
+
+    // Gear click -> login
+    document.getElementById('adminGear').addEventListener('click',function(){
+        document.getElementById('adminLoginBg').classList.add('open');
+        setTimeout(()=>document.getElementById('adminPwdInput').focus(),100);
+    });
+
+    // Enter in password field
+    document.getElementById('adminPwdInput').addEventListener('keydown',function(e){
+        if(e.key==='Enter') adminTryLogin();
+    });
+
+    /* ---- Login ---- */
+    window.adminTryLogin = async function(){
+        const pwd = document.getElementById('adminPwdInput').value;
+        const hash = await sha256(pwd);
+        if(hash===ADMIN_PWD_HASH){
+            document.getElementById('adminLoginBg').classList.remove('open');
+            document.getElementById('adminPwdInput').value='';
+            document.getElementById('loginError').style.display='none';
+            openAdminPanel();
+        } else {
+            document.getElementById('loginError').style.display='block';
+            document.getElementById('adminPwdInput').value='';
+            document.getElementById('adminPwdInput').focus();
+        }
+    };
+    window.adminCloseLogin = function(){
+        document.getElementById('adminLoginBg').classList.remove('open');
+        document.getElementById('adminPwdInput').value='';
+        document.getElementById('loginError').style.display='none';
+    };
+
+    /* ---- Admin Panel ---- */
+    function openAdminPanel(){
+        document.getElementById('adminOverlay').classList.add('open');
+        document.body.style.overflow='hidden';
+        adminRenderStats();
+        adminRenderList();
+    }
+
+    window.adminLogout = function(){
+        document.getElementById('adminOverlay').classList.remove('open');
+        document.body.style.overflow='';
+    };
+
+    /* ---- Stats ---- */
+    function adminRenderStats(){
+        const prods = getProducts();
+        const cats = {};
+        prods.forEach(p=>{ cats[p.category]=(cats[p.category]||0)+1; });
+        let html = `<div class="admin-stat-card"><div class="stat-num">${prods.length}</div><div class="stat-label">Всего товаров</div></div>`;
+        for(const c in CAT_NAMES){
+            html+=`<div class="admin-stat-card"><div class="stat-num">${cats[c]||0}</div><div class="stat-label">${CAT_NAMES[c]}</div></div>`;
+        }
+        document.getElementById('adminStats').innerHTML=html;
+    }
+
+    /* ---- Product List ---- */
+    window.adminRenderList = function(){
+        const prods = getProducts();
+        const search = (document.getElementById('adminSearchInput').value||'').toLowerCase();
+        const filterCat = document.getElementById('adminFilterCat').value;
+        const filterBrand = document.getElementById('adminFilterBrand').value;
+        let filtered = prods.filter(p=>{
+            if(filterCat!=='all' && p.category!==filterCat) return false;
+            if(filterBrand!=='all' && p.brand!==filterBrand) return false;
+            if(search && !p.name.toLowerCase().includes(search) && !(p.type||'').toLowerCase().includes(search) && !(p.description||'').toLowerCase().includes(search)) return false;
+            return true;
+        });
+
+        if(filtered.length===0){
+            document.getElementById('adminProductList').innerHTML=`<div class="admin-empty"><i class="fas fa-box-open"></i><p>${prods.length===0?'Товаров пока нет. Добавьте первый!':'Ничего не найдено'}</p>${prods.length===0?'<button class="adm-btn adm-btn-gold" onclick="adminOpenForm()"><i class="fas fa-plus"></i> Добавить товар</button>':''}</div>`;
+            return;
+        }
+
+        let html='';
+        filtered.forEach(p=>{
+            const thumb = p.photos&&p.photos.length>0 ? p.photos[0] : '';
+            const thumbHtml = thumb ? `<img class="admin-product-thumb" src="${thumb}" alt="">` : `<div class="admin-product-thumb" style="display:flex;align-items:center;justify-content:center;background:rgba(201,169,110,.08)"><i class="fas fa-image" style="color:var(--gold);opacity:.3"></i></div>`;
+            const priceText = p.price ? new Intl.NumberFormat('ru-RU').format(p.price)+' ₸' : '—';
+            html+=`<div class="admin-product-row">
+                ${thumbHtml}
+                <div class="admin-product-name">${escHtml(p.name)}<small><i class="fas ${BRAND_ICONS[p.brand]||'fa-tag'}"></i> ${escHtml(p.brand)} &middot; ${escHtml(p.type||'')}</small></div>
+                <div class="admin-product-cat"><i class="fas ${CAT_ICONS[p.category]||'fa-tag'}"></i> ${CAT_NAMES[p.category]||p.category}</div>
+                <div class="admin-product-price">${p.showPrice?priceText:'<span style="color:var(--gray);font-size:.72rem">Скрыта</span>'}</div>
+                <div class="admin-product-actions">
+                    <button class="adm-btn adm-btn-outline adm-btn-sm" onclick="adminEditProduct('${p.id}')" title="Редактировать"><i class="fas fa-pen"></i></button>
+                    <button class="adm-btn adm-btn-danger adm-btn-sm" onclick="adminDeleteProduct('${p.id}')" title="Удалить"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`;
+        });
+        document.getElementById('adminProductList').innerHTML=html;
+    };
+
+    function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+    /* ---- Product Form ---- */
+    let formPhotos = [];
+    let dragSrcIndex = null;
+
+    window.adminOpenForm = function(product){
+        formPhotos = product && product.photos ? [...product.photos] : [];
+        document.getElementById('admProdId').value = product ? product.id : '';
+        document.getElementById('admName').value = product ? product.name : '';
+        document.getElementById('admCategory').value = product ? product.category : 'sofa';
+        document.getElementById('admBrand').value = product ? product.brand : 'YOL Living';
+        document.getElementById('admType').value = product ? (product.type||'') : '';
+        document.getElementById('admDesc').value = product ? (product.description||'') : '';
+        document.getElementById('admPrice').value = product ? (product.price||'') : '';
+        document.getElementById('admShowPrice').checked = product ? !!product.showPrice : false;
+        document.getElementById('adminFormTitle').textContent = product ? 'Редактирование: '+product.name : 'Новый товар';
+        renderPhotoSlots();
+        document.getElementById('adminFormBg').classList.add('open');
+    };
+
+    window.adminCloseForm = function(){
+        document.getElementById('adminFormBg').classList.remove('open');
+    };
+
+    function renderPhotoSlots(){
+        const container = document.getElementById('admPhotosContainer');
+        let html = '';
+        for(let i=0;i<5;i++){
+            if(i<formPhotos.length){
+                html+=`<div class="admin-photo-slot has-photo" draggable="true" data-idx="${i}"
+                    ondragstart="adminPhotoDragStart(event,${i})" ondragover="adminPhotoDragOver(event)" ondragenter="adminPhotoDragEnter(event)" ondragleave="adminPhotoDragLeave(event)" ondrop="adminPhotoDrop(event,${i})" ondragend="adminPhotoDragEnd(event)">
+                    <img src="${formPhotos[i]}" alt="Photo ${i+1}">
+                    <button class="photo-remove" onclick="event.stopPropagation();adminRemovePhoto(${i})"><i class="fas fa-times"></i></button>
+                </div>`;
+            } else if(i===formPhotos.length){
+                html+=`<div class="admin-photo-slot" onclick="document.getElementById('admPhotoFileInput').click()">
+                    <i class="fas fa-plus photo-add-icon"></i>
+                </div>`;
+            } else {
+                html+=`<div class="admin-photo-slot" style="opacity:.3"><i class="fas fa-image photo-add-icon" style="font-size:1rem"></i></div>`;
+            }
+        }
+        container.innerHTML=html;
+    }
+
+    window.adminHandlePhotoFiles = function(e){
+        const files = Array.from(e.target.files);
+        const remaining = 5 - formPhotos.length;
+        const toRead = files.slice(0,remaining);
+        let loaded=0;
+        toRead.forEach(file=>{
+            const reader = new FileReader();
+            reader.onload = function(ev){
+                formPhotos.push(ev.target.result);
+                loaded++;
+                if(loaded===toRead.length) renderPhotoSlots();
+            };
+            reader.readAsDataURL(file);
+        });
+        e.target.value='';
+    };
+
+    window.adminRemovePhoto = function(idx){
+        formPhotos.splice(idx,1);
+        renderPhotoSlots();
+    };
+
+    /* Photo drag reorder */
+    window.adminPhotoDragStart = function(e,idx){
+        dragSrcIndex=idx;
+        e.target.classList.add('dragging');
+        e.dataTransfer.effectAllowed='move';
+    };
+    window.adminPhotoDragOver = function(e){ e.preventDefault(); e.dataTransfer.dropEffect='move'; };
+    window.adminPhotoDragEnter = function(e){ e.preventDefault(); e.currentTarget.classList.add('drag-over'); };
+    window.adminPhotoDragLeave = function(e){ e.currentTarget.classList.remove('drag-over'); };
+    window.adminPhotoDrop = function(e,idx){
+        e.preventDefault();
+        e.currentTarget.classList.remove('drag-over');
+        if(dragSrcIndex!==null && dragSrcIndex!==idx){
+            const moved=formPhotos.splice(dragSrcIndex,1)[0];
+            formPhotos.splice(idx,0,moved);
+            renderPhotoSlots();
+        }
+    };
+    window.adminPhotoDragEnd = function(e){ e.target.classList.remove('dragging'); dragSrcIndex=null; };
+
+    /* ---- Save Product ---- */
+    window.adminSaveProduct = function(){
+        const id = document.getElementById('admProdId').value;
+        const name = document.getElementById('admName').value.trim();
+        if(!name){ alert('Введите название товара'); return; }
+
+        const product = {
+            id: id || uid(),
+            name: name,
+            category: document.getElementById('admCategory').value,
+            brand: document.getElementById('admBrand').value,
+            type: document.getElementById('admType').value.trim(),
+            description: document.getElementById('admDesc').value.trim(),
+            price: parseInt(document.getElementById('admPrice').value)||0,
+            showPrice: document.getElementById('admShowPrice').checked,
+            photos: [...formPhotos]
+        };
+
+        let prods = getProducts();
+        if(id){
+            const idx = prods.findIndex(p=>p.id===id);
+            if(idx>=0) prods[idx]=product; else prods.push(product);
+        } else {
+            prods.push(product);
+        }
+        saveProducts(prods);
+        adminCloseForm();
+        adminRenderStats();
+        adminRenderList();
+        renderCatalogFromStorage();
+    };
+
+    /* ---- Edit ---- */
+    window.adminEditProduct = function(id){
+        const prods = getProducts();
+        const p = prods.find(x=>x.id===id);
+        if(p) adminOpenForm(p);
+    };
+
+    /* ---- Delete ---- */
+    let deleteTargetId = null;
+    window.adminDeleteProduct = function(id){
+        const prods = getProducts();
+        const p = prods.find(x=>x.id===id);
+        deleteTargetId = id;
+        document.getElementById('adminDeleteMsg').textContent = p ? 'Товар "'+p.name+'" будет удалён. Это действие нельзя отменить.' : '';
+        document.getElementById('adminDeleteBg').classList.add('open');
+    };
+    window.adminCloseDelete = function(){
+        document.getElementById('adminDeleteBg').classList.remove('open');
+        deleteTargetId=null;
+    };
+    window.adminConfirmDelete = function(){
+        if(!deleteTargetId) return;
+        let prods = getProducts();
+        prods = prods.filter(p=>p.id!==deleteTargetId);
+        saveProducts(prods);
+        adminCloseDelete();
+        adminRenderStats();
+        adminRenderList();
+        renderCatalogFromStorage();
+    };
+
+    /* ---- Export / Import ---- */
+    window.adminExportJSON = function(){
+        const prods = getProducts();
+        const blob = new Blob([JSON.stringify(prods,null,2)],{type:'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href=url; a.download='maison_products_'+new Date().toISOString().slice(0,10)+'.json';
+        a.click(); URL.revokeObjectURL(url);
+    };
+
+    window.adminImportJSON = function(e){
+        const file = e.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev){
+            try{
+                const data = JSON.parse(ev.target.result);
+                if(!Array.isArray(data)){alert('Неверный формат файла');return;}
+                // assign ids if missing
+                data.forEach(p=>{if(!p.id) p.id=uid();});
+                saveProducts(data);
+                adminRenderStats();
+                adminRenderList();
+                renderCatalogFromStorage();
+                alert('Импортировано '+data.length+' товаров');
+            }catch(err){alert('Ошибка чтения файла: '+err.message);}
+        };
+        reader.readAsText(file);
+        e.target.value='';
+    };
+
+    /* ---- Close admin modals on Escape ---- */
+    document.addEventListener('keydown',function(e){
+        if(e.key==='Escape'){
+            if(document.getElementById('adminDeleteBg').classList.contains('open')){adminCloseDelete();return;}
+            if(document.getElementById('adminFormBg').classList.contains('open')){adminCloseForm();return;}
+            if(document.getElementById('adminOverlay').classList.contains('open')){adminLogout();return;}
+            if(document.getElementById('adminLoginBg').classList.contains('open')){adminCloseLogin();return;}
+        }
+    });
+
+    /* ==================================================
+       CATALOG RENDERING FROM LOCALSTORAGE
+       ================================================== */
+
+    // Save the original static HTML for fallback
+    const catalogGrid = document.getElementById('catalogGrid');
+    const staticCatalogHTML = catalogGrid ? catalogGrid.innerHTML : '';
+
+    function renderCatalogFromStorage(){
+        const prods = getProducts();
+        if(!catalogGrid) return;
+
+        if(prods.length===0){
+            // Restore static content
+            catalogGrid.innerHTML = staticCatalogHTML;
+            reattachCardBehaviors();
+            return;
+        }
+
+        let html='';
+        prods.forEach((p,i)=>{
+            const img = p.photos&&p.photos.length>0 ? p.photos[0] : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYTJlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZpbGw9IiNjOWE5NmUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+0J3QtdGCINGE0L7RgtC+PC90ZXh0Pjwvc3ZnPg==';
+            const brandIcon = BRAND_ICONS[p.brand]||'fa-tag';
+            const catIcon = CAT_ICONS[p.category]||'fa-tag';
+            const delayClass = i%3===1?'reveal-delay-1': i%3===2?'reveal-delay-2':'';
+            const priceBtn = p.showPrice && p.price
+                ? `<div class="product-price-display" style="font-size:.95rem;font-weight:600;color:var(--gold);margin-top:6px">${new Intl.NumberFormat('ru-RU').format(p.price)} ₸</div><button class="product-btn" onclick="openModal('${escAttr(p.name)} — ${escAttr(p.type||CAT_NAMES[p.category]||'')}')"><i class="fas fa-tag"></i> Заказать</button>`
+                : `<button class="product-btn" onclick="openModal('${escAttr(p.name)} — ${escAttr(p.type||CAT_NAMES[p.category]||'')}')"><i class="fas fa-tag"></i> Узнать цену</button>`;
+
+            // Extra images for modal
+            let extraImgs = '';
+            if(p.photos && p.photos.length>1){
+                extraImgs = p.photos.slice(1).map(ph=>`<img src="${ph}" class="admin-extra-photo" style="display:none" data-product-id="${p.id}">`).join('');
+            }
+
+            html+=`<div class="product-card reveal ${delayClass}" data-category="${escAttr(p.category)}" data-product-id="${p.id}">
+                <div class="product-card-image">
+                    <img src="${img}" alt="${escAttr(p.name)}">
+                    <span class="product-card-badge"><i class="fas ${brandIcon}"></i> ${escHtml(p.brand)}</span>
+                </div>
+                <div class="product-card-body">
+                    <h3>${escHtml(p.name)}</h3>
+                    <div class="product-type"><i class="fas ${catIcon}"></i> ${escHtml(p.type||CAT_NAMES[p.category]||'')}</div>
+                    <p>${escHtml(p.description||'')}</p>
+                    ${priceBtn}
+                </div>
+                ${extraImgs}
+            </div>`;
+        });
+
+        catalogGrid.innerHTML = html;
+        reattachCardBehaviors();
+    }
+
+    function escAttr(s){return (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+
+    function reattachCardBehaviors(){
+        // Re-add toggle buttons
+        document.querySelectorAll('.product-card').forEach(card => {
+            if(!card.querySelector('.product-card-toggle')){
+                const toggle = document.createElement('div');
+                toggle.className = 'product-card-toggle';
+                toggle.innerHTML = '<span>Подробнее</span> <i class="fas fa-chevron-down"></i>';
+                card.appendChild(toggle);
+            }
+        });
+
+        // Re-attach click handlers
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.onclick = function(e){
+                if (e.target.closest('.product-btn')) return;
+                const isExpanded = this.classList.contains('expanded');
+                document.querySelectorAll('.product-card.expanded').forEach(c => {
+                    if (c !== this) {
+                        c.classList.remove('expanded');
+                        const t = c.querySelector('.product-card-toggle span');
+                        if(t) t.textContent = 'Подробнее';
+                    }
+                });
+                this.classList.toggle('expanded');
+                const toggleText = this.querySelector('.product-card-toggle span');
+                if(toggleText) toggleText.textContent = this.classList.contains('expanded') ? 'Свернуть' : 'Подробнее';
+            };
+            card.ondblclick = function(e){
+                if (e.target.closest('.product-btn')) return;
+                openProductDetail(this);
+            };
+        });
+
+        // Re-run reveal observer for new cards
+        if(typeof IntersectionObserver !== 'undefined'){
+            const obs = new IntersectionObserver((entries)=>{
+                entries.forEach(entry=>{
+                    if(entry.isIntersecting){entry.target.classList.add('revealed');obs.unobserve(entry.target);}
+                });
+            },{threshold:0.1});
+            document.querySelectorAll('.product-card.reveal:not(.revealed)').forEach(el=>obs.observe(el));
+        }
+
+        // Re-apply current filter
+        const activeFilter = document.querySelector('.catalog-filter.active');
+        if(activeFilter){
+            const filter = activeFilter.dataset.filter;
+            if(filter && filter!=='all'){
+                document.querySelectorAll('.product-card').forEach(card => {
+                    const show = card.dataset.category === filter;
+                    card.style.display = show ? '' : 'none';
+                });
+            }
+        }
+    }
+
+    /* ---- Init: render from localStorage on page load ---- */
+    renderCatalogFromStorage();
+
+})();
+</script>
+
 </body>
 </html>
