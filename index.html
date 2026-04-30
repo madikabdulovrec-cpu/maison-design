@@ -1239,6 +1239,7 @@
             background: #08081a;
             color: rgba(255,255,255,0.3);
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             font-size: 0.8rem;
@@ -1286,6 +1287,38 @@
             border-color: var(--gold);
             color: var(--gold);
             background: rgba(201,169,110,0.08);
+        }
+        .footer-admin-entry {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .footer-admin-btn {
+            background: transparent;
+            border: 1px solid rgba(201,169,110,0.2);
+            color: rgba(255,255,255,0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font-body);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .footer-admin-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(201,169,110,0.06);
+        }
+        .footer-admin-btn i {
+            font-size: 0.65rem;
         }
 
         /* ===== MODAL ===== */
@@ -2328,6 +2361,11 @@
             <a href="#"><i class="fab fa-whatsapp"></i></a>
             <a href="#"><i class="fab fa-telegram-plane"></i></a>
         </div>
+        <div class="footer-admin-entry">
+            <button class="footer-admin-btn" onclick="window.openAdminLogin()" title="Вход для администратора">
+                <i class="fas fa-lock"></i> Управление сайтом
+            </button>
+        </div>
     </footer>
 
     <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
@@ -2864,6 +2902,12 @@
     /* ---- Gear visibility ---- */
     let gearShown = false;
     function showGear(){ if(!gearShown){gearShown=true;document.getElementById('adminGear').classList.add('visible');} }
+    window.showGear = showGear;
+    window.openAdminLogin = function(){
+        showGear();
+        document.getElementById('adminLoginBg').classList.add('open');
+        setTimeout(()=>document.getElementById('adminPwdInput').focus(),150);
+    };
 
     // Ctrl+Shift+A
     document.addEventListener('keydown',function(e){
