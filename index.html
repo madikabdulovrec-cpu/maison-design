@@ -3234,10 +3234,10 @@
         if(typeof IntersectionObserver !== 'undefined'){
             const obs = new IntersectionObserver((entries)=>{
                 entries.forEach(entry=>{
-                    if(entry.isIntersecting){entry.target.classList.add('revealed');obs.unobserve(entry.target);}
+                    if(entry.isIntersecting){entry.target.classList.add('visible');obs.unobserve(entry.target);}
                 });
             },{threshold:0.1});
-            document.querySelectorAll('.product-card.reveal:not(.revealed)').forEach(el=>obs.observe(el));
+            document.querySelectorAll('.product-card.reveal:not(.visible)').forEach(el=>obs.observe(el));
         }
 
         // Re-apply current filter
