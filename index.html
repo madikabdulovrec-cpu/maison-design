@@ -2391,12 +2391,44 @@
             backToTop.classList.toggle('visible', window.scrollY > 500);
         });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+        // IntersectionObserver for reveal animations — set up AFTER DOM moves
+        function setupRevealObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
+            document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+        }
+        setupRevealObserver();
+
+        // Fallback: force-show any cards still hidden after 3s (e.g. slow scroll or observer miss)
+        setTimeout(() => {
+            document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight + 200) {
+                    el.classList.add('visible');
+                }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }, 2000);
+
+        // Also re-check on scroll for any missed elements
+        let revealThrottle;
+        window.addEventListener('scroll', () => {
+            if (revealThrottle) return;
+            revealThrottle = setTimeout(() => {
+                document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight + 100) {
+                        el.classList.add('visible');
+                    }
+                });
+                revealThrottle = null;
+            }, 100);
+        });
 
         // Add toggle buttons to all product cards
         document.querySelectorAll('.product-card').forEach(card => {
